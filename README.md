@@ -6,8 +6,8 @@
 ![Espressif](https://img.shields.io/badge/espressif-E7352C.svg?style=for-the-badge&logo=espressif&logoColor=white)
 ![Arduino](https://img.shields.io/badge/-Arduino-00979D?style=for-the-badge&logo=Arduino&logoColor=white)
 ***
-![изображение](https://github.com/Bastion-RND/Turtle32_rep/assets/40739802/662d6ed7-74c3-4ff9-8ef6-75e7cf9aee10)
-![изображение](https://github.com/Bastion-RND/Turtle32_rep/assets/40739802/452e7c48-60b7-47e8-b694-a474d07944ae)
+![изображение](https://github.com/Bastion-RND/Turtle32_rep/assets/40739802/e3d4b3d4-27fd-471d-b871-4174aa9cce13)
+
 ***
 
 Это небольшое руководство с основными учебными материалами для работы с платой Turtle32. Здесь вы можете найти примеры кода на разных языках и в разных средах разработки. Само руководство будет разделено на два оснвных раздеола по языкам программирования:

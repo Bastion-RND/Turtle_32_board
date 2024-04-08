@@ -1,4 +1,3 @@
-# Turtle32_rep
 ![изображение](https://github.com/Bastion-RND/Turtle32_rep/assets/40739802/662d6ed7-74c3-4ff9-8ef6-75e7cf9aee10)
 
 

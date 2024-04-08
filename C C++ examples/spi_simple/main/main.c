@@ -6,6 +6,7 @@
 #include "freertos/task.h"
 #include "esp_system.h"
 #include "driver/spi_master.h"
+#include "driver/gpio.h"
 
 #define PIN_NUM_MISO 13
 #define PIN_NUM_MOSI 11
@@ -21,38 +22,51 @@
 
 spi_device_handle_t spi;
 
-static void write_reg(uint8_t reg, uint8_t value) {
-    uint8_t tx_data[2] = { reg, value };
-
-    spi_transaction_t t = {
-    	.flags=SPI_TRANS_USE_TXDATA,
-        .tx_buffer = tx_data,
-        .length = 2 * 8
-    };
-
-    ESP_ERROR_CHECK(spi_device_polling_transmit(spi, &t));
+void spi_data(spi_device_handle_t spi, const uint8_t *data, int len)
+{
+    esp_err_t ret;
+    spi_transaction_t t;
+    if (len==0) return;             //no need to send anything
+    memset(&t, 0, sizeof(t));       //Zero out the transaction
+    t.length=len*8;                 //Len is in bytes, transaction length is in bits.
+    t.tx_buffer=data;               //Data
+    t.user=(void*)1;                //D/C needs to be set to 1
+    t.flags     = SPI_TRANS_USE_TXDATA,
+    ret=spi_device_polling_transmit(spi, &t);  //Transmit!
+    assert(ret==ESP_OK);            //Should have had no issues.
 }
 
-uint32_t read_reg(uint8_t reg, uint8_t value) {
-    uint8_t rx_data[2] = { reg, value };
-
-    spi_transaction_t t = {
-        .flags = SPI_TRANS_USE_RXDATA,
-        .rx_buffer = rx_data,
-        .length = 2 * 8
-    };
-
-    ESP_ERROR_CHECK(spi_device_polling_transmit(spi, &t));
-
-    spi_device_release_bus(spi);
-
-    return *(uint32_t*)t.rx_data;
+void spi_cmd(spi_device_handle_t spi, const uint8_t cmd, bool keep_cs_active)
+{
+    esp_err_t ret;
+    spi_transaction_t t;
+    memset(&t, 0, sizeof(t));       //Zero out the transaction
+    t.length=8;                     //Command is 8 bits
+    t.tx_buffer=&cmd;               //The data is the cmd itself
+    t.user=(void*)0;                //D/C needs to be set to 0
+    if (keep_cs_active) {
+      t.flags = SPI_TRANS_CS_KEEP_ACTIVE;   //Keep CS active after data transfer
+    }
+    ret=spi_device_polling_transmit(spi, &t);  //Transmit!
+    assert(ret==ESP_OK);            //Should have had no issues.
 }
 
-static void clear(void) {
-  for (int i = 0; i < 8; i++) {
-    write_reg(i + 1, 0x00);
-  }
+uint32_t spi_read(spi_device_handle_t spi) {
+	spi_device_acquire_bus(spi, portMAX_DELAY);
+
+	spi_transaction_t t;
+	    memset(&t, 0, sizeof(t));
+	    t.length=8*3;
+	    t.flags = SPI_TRANS_USE_RXDATA;
+	    t.user = (void*)1;
+
+	    esp_err_t ret = spi_device_polling_transmit(spi, &t);
+	    assert( ret == ESP_OK );
+
+	    // Release bus
+	    spi_device_release_bus(spi);
+
+	    return *(uint32_t*)t.rx_data;
 }
 
 void app_main(void)
@@ -65,17 +79,18 @@ void app_main(void)
         .sclk_io_num=PIN_NUM_CLK,
         .quadwp_io_num=-1,
         .quadhd_io_num=-1,
-        .max_transfer_sz=16*320*2+8
+        .max_transfer_sz=32
     };
     spi_device_interface_config_t devcfg={
             .clock_speed_hz = 1000000,  // 1 MHz
             .mode = 0,                  //SPI mode 0
             .spics_io_num = PIN_NUM_CS,
             .queue_size = 1,
-            .flags = SPI_DEVICE_HALFDUPLEX,
+//            .flags = SPI_DEVICE_HALFDUPLEX,
             .pre_cb = NULL,
             .post_cb = NULL,                        //We want to be able to queue 7 transactions at a time
     };
+
     //Initialize the SPI bus
         ret=spi_bus_initialize(SPI_NUM, &buscfg, SPI_DMA_CH_AUTO);
         ESP_ERROR_CHECK(ret);
@@ -83,15 +98,24 @@ void app_main(void)
         ret=spi_bus_add_device(SPI_NUM, &devcfg, &spi);
         ESP_ERROR_CHECK(ret);
 
-        write_reg(DISPLAY_TEST_REG, 0);
-        write_reg(SCAN_LIMIT_REG, 7);
-        write_reg(DECODE_MODE_REG, 0);
-        write_reg(SHUTDOWN_REG, 1);
-        clear();
+        spi_cmd(spi, SCAN_LIMIT_REG, false);
+        spi_data(spi, 0x07, 1&0x1F);
+
+        spi_cmd(spi, DECODE_MODE_REG, false);
+        spi_data(spi, 0x00, 1);
+
+        spi_cmd(spi, SHUTDOWN_REG, false);
+        spi_data(spi, 0x01, 1);
+
+        spi_cmd(spi, DISPLAY_TEST_REG, false);
+        spi_data(spi, 0x00, 1);
+
+        spi_cmd(spi, SCAN_LIMIT_REG, false);
+        uint32_t test = spi_read(spi);
+        printf("here test: %ld", test);
 
     while (true) {
-    	write_reg(DISPLAY_TEST_REG, 7);
         printf("Hello from app_main!\n");
-//        sleep(1);
+        vTaskDelay(1000 / portTICK_PERIOD_MS);
     }
 }

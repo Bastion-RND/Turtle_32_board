@@ -6,7 +6,8 @@
 ![Espressif](https://img.shields.io/badge/espressif-E7352C.svg?style=for-the-badge&logo=espressif&logoColor=white)
 ![Arduino](https://img.shields.io/badge/-Arduino-00979D?style=for-the-badge&logo=Arduino&logoColor=white)
 ***
-![изображение](https://github.com/Bastion-RND/Turtle32_rep/assets/40739802/e3d4b3d4-27fd-471d-b871-4174aa9cce13)
+![изображение](https://github.com/Bastion-RND/Turtle32_rep/assets/40739802/5d594d49-0311-4f87-93dc-e8bf911d4b30)
+
 
 ***
 

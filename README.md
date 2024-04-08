@@ -1,6 +1,14 @@
+![Visual Studio Code](https://img.shields.io/badge/Visual%20Studio%20Code-0078d7.svg?style=for-the-badge&logo=visual-studio-code&logoColor=white)
+![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
+![PyCharm](https://img.shields.io/badge/pycharm-143?style=for-the-badge&logo=pycharm&logoColor=black&color=black&labelColor=green)
+![C++](https://img.shields.io/badge/c++-%2300599C.svg?style=for-the-badge&logo=c%2B%2B&logoColor=white)
+![CMake](https://img.shields.io/badge/CMake-%23008FBA.svg?style=for-the-badge&logo=cmake&logoColor=white)
+![Espressif](https://img.shields.io/badge/espressif-E7352C.svg?style=for-the-badge&logo=espressif&logoColor=white)
+![Arduino](https://img.shields.io/badge/-Arduino-00979D?style=for-the-badge&logo=Arduino&logoColor=white)
+***
 ![изображение](https://github.com/Bastion-RND/Turtle32_rep/assets/40739802/662d6ed7-74c3-4ff9-8ef6-75e7cf9aee10)
 ![изображение](https://github.com/Bastion-RND/Turtle32_rep/assets/40739802/452e7c48-60b7-47e8-b694-a474d07944ae)
-
+***
 
 Это небольшое руководство с основными учебными материалами для работы с платой Turtle32. Здесь вы можете найти примеры кода на разных языках и в разных средах разработки. Само руководство будет разделено на два оснвных раздеола по языкам программирования:
 * MicroPython (Thonny IDE, esptool)

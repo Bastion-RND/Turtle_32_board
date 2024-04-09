@@ -1,7 +1,7 @@
 from machine import Pin
 import neopixel
 import time
-pin = Pin(2, Pin.OUT)
+pin = Pin(48, Pin.OUT)
 np = neopixel.NeoPixel(pin, 8)
 
 #brightness :0-255

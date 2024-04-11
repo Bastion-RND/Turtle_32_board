@@ -6,7 +6,8 @@
 ![Espressif](https://img.shields.io/badge/espressif-E7352C.svg?style=for-the-badge&logo=espressif&logoColor=white)
 ![Arduino](https://img.shields.io/badge/-Arduino-00979D?style=for-the-badge&logo=Arduino&logoColor=white)
 ***
-![изображение](https://github.com/Bastion-RND/Turtle32_rep/assets/40739802/5d594d49-0311-4f87-93dc-e8bf911d4b30)
+![изображение](https://github.com/Bastion-RND/Turtle_32_board/assets/40739802/e20124f0-133e-4e97-bad1-996dc345875c)
+
 
 ```Внимание в первой ревизии платы не работает акселерометр и гироскоп(MPU)```
 

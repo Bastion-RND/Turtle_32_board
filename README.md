@@ -7,7 +7,8 @@
 ![Arduino](https://img.shields.io/badge/-Arduino-00979D?style=for-the-badge&logo=Arduino&logoColor=white)
 
 ***
-![изображение](https://github.com/Bastion-RND/Turtle_32_board/assets/40739802/11a6efea-1d55-4c5f-aa14-95fb886c665d)
+![Turtle32](https://github.com/user-attachments/assets/91167c4e-2200-475e-b3c0-fd53b2182f84)
+)
 
 ***
 
